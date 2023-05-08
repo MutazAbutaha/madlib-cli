@@ -1,5 +1,6 @@
 .venv
 tests/__init__.py
+__pycache__/
 
 
 
