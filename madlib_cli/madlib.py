@@ -8,10 +8,14 @@ print('''
 
 
 def read_template(path):
-    with open(path , mode='r') as f :
-        res= f.read()
-        
-        return res
+    try:
+        with open(path, "r") as file:
+            content = file.read()
+            return content
+    except FileNotFoundError as fnf_error:
+        print("An error was encountered when grabbing a file")
+        print(fnf_error)
+        raise FileNotFoundError
         
 firstTxt=read_template("assets/dark_and_stormy_night_template.txt")   
  
@@ -30,6 +34,11 @@ parts=[parse_template(firstTxt)][0][1]
 def merge(stripped,parts):    
     txt=stripped.format(*parts)
     return txt
+
+def save_file(stripped):
+    with open("/home/mutaz/madlib-cli/assets/new_file.txt", "w") as new_file:
+        new_file.write(stripped)
+
 
 
 if __name__ == '__main__':
@@ -50,5 +59,6 @@ if __name__ == '__main__':
         return  tuple(arr)
 
     userinputs=userInputs(parts)
-        
-    print(merge(stripped,userinputs))
+    merged_user_input = merge(stripped,userinputs)
+    print(merged_user_input,userinputs)
+    save_file(merged_user_input)
